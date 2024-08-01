@@ -12,6 +12,7 @@ const emails = [
 
 const Sidebar = () => {
   const [opened, setOpened] = useState<string[]>([]);
+
   return (
     <div className="w-[350px] flex flex-col gap-2 pr-3">
       <h1 className="px-2 mb-1 uppercase font-bold text-black/60">Work</h1>
@@ -21,7 +22,7 @@ const Sidebar = () => {
       <Accordion type="multiple" onValueChange={setOpened}>
         {
           emails.map(email => (
-            <EmailCollapsible email={email} isOpen={opened.includes(email)} />
+            <EmailCollapsible key={email} email={email} open={opened.includes(email)} />
           ))
         }
       </Accordion>

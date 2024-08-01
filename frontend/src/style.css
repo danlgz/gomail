@@ -66,4 +66,12 @@
   body {
     @apply bg-transparent text-foreground;
   }
+
+  .accordion-margin-up {
+    @apply mt-[-100%] transition-all duration-200 ease-in-out;
+  }
+
+  .accordion-margin-down {
+    @apply mt-0 transition-all duration-200 ease-in-out;
+  }
 }

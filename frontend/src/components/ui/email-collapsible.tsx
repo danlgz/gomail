@@ -1,23 +1,24 @@
 import { ChevronRight, Ellipsis, File, Inbox, OctagonAlert, Send } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./collapsible";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { cn } from "../../lib/utils";
 import { AccordionContent, AccordionItem, AccordionTrigger } from "./accordion";
+import AnimatedEmail from "./animated-email";
 
 type Props = {
   email: string;
-  isOpen?: boolean;
+  open?: boolean;
 }
 
-export const EmailCollapsible = ({ email, isOpen }: Props) => {
+export const EmailCollapsible = ({ email, open }: Props) => {
   return (
     <AccordionItem
-      className="w-full"
+      className="w-full border-red-400"
       value={email}
     >
-      <AccordionTrigger className="w-full flex justify-between p-2 rounded-lg hover:bg-black/5 transition-all items-center cursor-default">
+      <AccordionTrigger className="w-full flex justify-between p-2 rounded-lg bg-gray-200 transition-all items-center cursor-default">
         <div className="flex items-center gap-1">
-          <ChevronRight size={16} className={cn("transition-all", isOpen ? "rotate-90" : "")} />
+          <AnimatedEmail open={open} />
           <span className="font-bold">{email}</span>
         </div>
         <span

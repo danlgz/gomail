@@ -1,3 +1,5 @@
+const plugin = require('tailwindcss/plugin')
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
@@ -56,12 +58,12 @@ module.exports = {
       },
       keyframes: {
         "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
+          from: { marginTop: "0" },
+          to: { marginTop: "-100%" }
         },
         "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
+          from: { marginTop: "-100%" },
+          to: { marginTop: "0" }
         },
         'collapsible-down': {
       		from: { height: '0' },
@@ -73,12 +75,29 @@ module.exports = {
        	},
       },
       animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
-        'collapsible-down': 'collapsible-down 0.2s ease-out',
-        'collapsible-up': 'collapsible-up 0.2s ease-out',
+        "accordion-down": "accordion-down 300ms ease-out",
+        "accordion-up": "accordion-up 300ms ease-out",
+        'collapsible-down': 'collapsible-down 300ms ease-out',
+        'collapsible-up': 'collapsible-up 300ms ease-out',
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    require("tailwindcss-radix")(),
+    plugin(({ matchUtilities, theme }) => {
+      matchUtilities(
+        {
+          "animation-delay": (value) => {
+            return {
+              "animation-delay": value,
+            };
+          },
+        },
+        {
+          values: theme("transitionDelay"),
+        }
+      );
+    }),
+  ],
 }
