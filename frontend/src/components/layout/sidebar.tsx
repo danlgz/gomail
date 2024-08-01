@@ -4,6 +4,7 @@ import { useState } from "react";
 import { cn } from "../../lib/utils";
 import { EmailCollapsible } from "../ui/email-collapsible";
 import { Accordion } from "../ui/accordion";
+import { usePalette } from "../../providers/pallete";
 
 const emails = [
   "hi@danlz.io",
@@ -12,10 +13,20 @@ const emails = [
 
 const Sidebar = () => {
   const [opened, setOpened] = useState<string[]>([]);
+  const { classBuilder } = usePalette();
 
   return (
     <div className="w-[350px] flex flex-col gap-2 pr-3">
-      <h1 className="px-2 mb-1 uppercase font-bold text-black/60">Work</h1>
+      <h1
+        className={
+          cn(
+            "px-2 mb-1 uppercase font-black",
+            classBuilder({ text: 'foreground' })
+          )
+        }
+      >
+        Work
+      </h1>
 
       <hr className="h-px bg-black/10 border-0"/>
 
