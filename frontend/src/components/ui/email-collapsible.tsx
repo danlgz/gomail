@@ -12,7 +12,7 @@ type Props = {
 }
 
 export const EmailCollapsible = ({ email, open }: Props) => {
-  const { classBuilder } = usePalette();
+  const { classBuilder, palette: { foreground2 } } = usePalette();
 
   return (
     <AccordionItem
@@ -22,7 +22,7 @@ export const EmailCollapsible = ({ email, open }: Props) => {
       <AccordionTrigger
         className={
           cn(
-            "w-full flex justify-between p-2 rounded-lg transition-all items-center cursor-default group",
+            "w-full flex justify-between p-2 rounded-lg transition-all items-center cursor-default group active:scale-[.99]",
             classBuilder({ bg: 'base', hover: 'highlight1' })
           )
         }
@@ -34,7 +34,7 @@ export const EmailCollapsible = ({ email, open }: Props) => {
             )
           }
         >
-          <AnimatedEmail open={open} />
+          <AnimatedEmail open={open} color={foreground2} />
           <span className={cn("font-extrabold")}>
             {email}
           </span>
@@ -70,7 +70,11 @@ export const EmailCollapsible = ({ email, open }: Props) => {
           )
         }
       >
-        <div className="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-black/5">
+        <div
+          className={
+            "flex items-center justify-between py-2 px-3 rounded-lg hover:bg-black/5"
+          }
+        >
           <div
             className="flex gap-2 items-center"
           >

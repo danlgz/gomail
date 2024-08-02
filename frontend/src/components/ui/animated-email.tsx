@@ -4,13 +4,14 @@ import { useEffect, useRef, useState } from 'react';
 
 type Props = {
   open?: boolean;
+  color?: string;
 }
 
 const initalFrame = 0;
 const durationFrames = animationData['op'] || 0;
 const middleFrame = durationFrames / 2;
 
-export const AnimatedEmail = ({ open }: Props) => {
+export const AnimatedEmail = ({ open, color }: Props) => {
   const ref: LottieRef = useRef(null);
   const [hasRendered, setHasRendered] = useState(false);
 
@@ -38,6 +39,10 @@ export const AnimatedEmail = ({ open }: Props) => {
       autoPlay={false}
       loop={false}
       initialSegment={[12, 12]}
+      style={color ? {
+        // @ts-ignore
+        '--custom-stroke': color
+      } : undefined}
     />
   )
 }

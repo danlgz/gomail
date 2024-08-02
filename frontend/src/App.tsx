@@ -3,7 +3,7 @@ import {Greet} from "../wailsjs/go/main/App";
 import Screen from './components/layout/screen';
 
 function App() {
-  const [mainColor, setMainColor] = useState("#C3B6FD");
+  const [mainColor, setMainColor] = useState("#064e3b");
   const [resultText, setResultText] = useState("Please enter your name below 👇");
   const [name, setName] = useState('');
   const updateName = (e: any) => setName(e.target.value);

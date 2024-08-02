@@ -19,6 +19,7 @@ export const classBuilder = cva(
       text: {
         base: [`text-[var(--text)]`],
         foreground: [`text-[var(--foreground)]`],
+        foreground2: [`text-[var(--foreground-2)]`],
       }
     }
   }
@@ -28,6 +29,7 @@ type Palette = {
   base: string; // base color
   text: string; // text color
   foreground: string; // text color
+  foreground2: string; // text color
   highlight1: string; // background color based on the base color
   highlight2: string; // background color based on the base color
 }
@@ -39,14 +41,16 @@ export const genPalette = (base: string): GenPaletteReturn => {
   const color = chroma.valid(base) ? chroma(base) : chroma('#000');
   const luminance = color.luminance();
   const text = luminance > 0.5 ? '#000' : '#fff';
-  const foreground = luminance > 0.5 ? color.darken(1.8).hex() : color.brighten(2).hex();
-  const highlight1 = luminance > 0.5 ? color.darken(0.3).hex() : color.brighten(0.3).hex();
-  const highlight2 = luminance > 0.5 ? color.darken(0.6).hex() : color.brighten(0.6).hex();
+  const foreground = luminance > 0.5 ? color.darken(2.5).hex() : color.brighten(3.5).hex();
+  const foreground2 = luminance > 0.5 ? color.darken(3.5).hex() : color.brighten(4).hex();
+  const highlight1 = luminance > 0.5 ? color.darken(0.3).hex() : color.brighten(0.5).hex();
+  const highlight2 = luminance > 0.5 ? color.darken(0.6).hex() : color.brighten(1).hex();
 
   const palette = {
     base,
     text,
     foreground,
+    foreground2,
     highlight1,
     highlight2,
   };
@@ -56,6 +60,7 @@ export const genPalette = (base: string): GenPaletteReturn => {
     ['--base']: base,
     ['--text']: text,
     ['--foreground']: foreground,
+    ['--foreground-2']: foreground2,
     ['--highlight-1']: highlight1,
     ['--highlight-2']: highlight2,
   }
