@@ -3,16 +3,20 @@ package main
 import (
 	"context"
 	"fmt"
+	"gomail/internal/workspaces"
 )
 
 // App struct
 type App struct {
 	ctx context.Context
+	workspacesManager *workspaces.WorkspacesManager
 }
 
 // NewApp creates a new App application struct
 func NewApp() *App {
-	return &App{}
+	return &App{
+		workspacesManager: workspaces.NewWorkspacesManager(),
+	}
 }
 
 // startup is called when the app starts. The context is saved
@@ -24,4 +28,8 @@ func (a *App) startup(ctx context.Context) {
 // Greet returns a greeting for the given name
 func (a *App) Greet(name string) string {
 	return fmt.Sprintf("Hello %s, It's show time!", name)
+}
+
+func (a *App) ListWorkspaces() []workspaces.Workspace {
+	return a.workspacesManager.List()
 }
