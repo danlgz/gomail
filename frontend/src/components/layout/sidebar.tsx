@@ -11,12 +11,22 @@ const emails = [
   "lucas@nahualventures.com"
 ]
 
-const Sidebar = () => {
+type Props = {
+  className?: string;
+  name: string;
+}
+
+const Sidebar = ({ className, name }: Props) => {
   const [opened, setOpened] = useState<string[]>([]);
   const { classBuilder } = usePalette();
 
   return (
-    <div className="w-[350px] flex flex-col gap-2 pr-3">
+    <div className={
+      cn(
+        "flex flex-col gap-2 w-full",
+        className
+      )
+    }>
       <h1
         className={
           cn(
@@ -25,18 +35,25 @@ const Sidebar = () => {
           )
         }
       >
-        Work
+        {name}
       </h1>
 
-      <hr className="h-px bg-black/10 border-0"/>
+      <hr
+        className={
+          cn(
+            "h-px border-0 mr-3",
+            classBuilder({ bg: 'highlight1' })
+          )
+        }
+      />
 
-      <Accordion type="multiple" onValueChange={setOpened}>
+      {/* <Accordion type="multiple" onValueChange={setOpened}>
         {
           emails.map(email => (
             <EmailCollapsible key={email} email={email} open={opened.includes(email)} />
           ))
         }
-      </Accordion>
+      </Accordion> */}
 
     </div>
   )

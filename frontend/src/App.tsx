@@ -16,7 +16,7 @@ function App() {
 
   return (
       <main className="w-full h-screen">
-          <Screen color={mainColor} />
+          <Screen color={mainColor} workspaces={[]} />
       </main>
   )
 }

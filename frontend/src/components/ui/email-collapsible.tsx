@@ -16,33 +16,31 @@ export const EmailCollapsible = ({ email, open }: Props) => {
 
   return (
     <AccordionItem
-      className="w-full border-red-400"
+      className="w-full pr-3"
       value={email}
     >
       <AccordionTrigger
         className={
           cn(
-            "w-full flex justify-between p-2 rounded-lg transition-all items-center cursor-default group active:scale-[.99]",
+            "w-full gap-2 flex justify-between p-2 rounded-lg transition-all items-center cursor-default group active:scale-[.99]",
             classBuilder({ bg: 'base', hover: 'highlight1' })
           )
         }
       >
-        <div className={
+        <AnimatedEmail open={open} color={foreground2} className="flex-none" />
+        <span className={
             cn(
-              "flex items-center gap-2",
+              "font-extrabold text-sm flex-1 text-left truncate",
               classBuilder({ text: 'foreground' }),
             )
           }
         >
-          <AnimatedEmail open={open} color={foreground2} />
-          <span className={cn("font-extrabold")}>
-            {email}
-          </span>
-        </div>
+          {email}
+        </span>
         <span
           className={
             cn(
-              "p-1 rounded-md opacity-0 group-hover:opacity-100 transition-all",
+              "p-1 rounded-md hidden group-hover:block flex-none",
               classBuilder({ hover: 'highlight2' })
             )
           }

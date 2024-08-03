@@ -25,8 +25,13 @@ const router = createBrowserRouter([
     loader: ListWorkspaces,
   },
   {
-    path: "/workspace/:id",
-    element: <Dashboard />
+    path: "workspace",
+    element: <Navigate to="/" />,
+  },
+  {
+    path: "workspace/:id",
+    element: <Dashboard />,
+    loader: ListWorkspaces,
   }
 ])
 

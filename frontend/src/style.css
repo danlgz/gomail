@@ -82,3 +82,7 @@
     stroke: var(--custom-stroke);
   }
 }
+
+.rssas-slider-tray {
+  height: 100%;
+}

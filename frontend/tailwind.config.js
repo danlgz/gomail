@@ -58,12 +58,12 @@ module.exports = {
       },
       keyframes: {
         "accordion-down": {
-          from: { marginTop: "0" },
-          to: { marginTop: "-100%" }
+          from: { height: "0", opacity: 0 },
+          to: { height: "var(--radix-accordion-content-height)", opacity: 1 },
         },
         "accordion-up": {
-          from: { marginTop: "-100%" },
-          to: { marginTop: "0" }
+          from: { height: "var(--radix-accordion-content-height)", opacity: 1 },
+          to: { height: "0", opacity: 0 },
         },
         'collapsible-down': {
       		from: { height: '0' },
@@ -75,8 +75,8 @@ module.exports = {
        	},
       },
       animation: {
-        "accordion-down": "accordion-down 300ms ease-out",
-        "accordion-up": "accordion-up 300ms ease-out",
+        "accordion-down": "accordion-down 0.15s ease-out",
+        "accordion-up": "accordion-up 0.15s ease-out",
         'collapsible-down': 'collapsible-down 300ms ease-out',
         'collapsible-up': 'collapsible-up 300ms ease-out',
       },

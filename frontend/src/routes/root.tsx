@@ -21,8 +21,7 @@ const Root = () => {
             )
           }
         }
-      >
-      </Await>
+      />
     </Suspense>
   )
 }
