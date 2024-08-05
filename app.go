@@ -33,3 +33,7 @@ func (a *App) Greet(name string) string {
 func (a *App) ListWorkspaces() []workspaces.Workspace {
 	return a.workspacesManager.List()
 }
+
+func (a *App) GetCurrentWorkspace() workspaces.Workspace {
+	return a.workspacesManager.GetCurrentWorkspace()
+}

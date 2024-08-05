@@ -86,3 +86,11 @@
 .rssas-slider-tray {
   height: 100%;
 }
+
+.rssas-slide {
+    scroll-snap-stop: always !important;
+}
+
+* {
+    overscroll-behavior-x: contain;
+}

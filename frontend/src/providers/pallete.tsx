@@ -2,7 +2,7 @@ import { createContext, useContext, useMemo, useState } from "react";
 import { classBuilder, genPalette, GenPaletteReturn } from "../lib/palette";
 import { cva, type VariantProps } from "class-variance-authority";
 
-const defaultColor = '#000000';
+const defaultColor = '#fff';
 
 type PaletteContextType = {
   color: string;
@@ -17,8 +17,8 @@ const PaletteContext = createContext<PaletteContextType>({
   classBuilder,
 })
 
-export const PaletteProvider = ({ children, color: defaultColor }: { children: JSX.Element, color: string }) => {
-  const [color, setColor] = useState<string>(defaultColor);
+export const PaletteProvider = ({ children, color: baseColor = defaultColor }: { children: JSX.Element, color?: string }) => {
+  const [color, setColor] = useState<string>(baseColor);
   const palette = useMemo(() => genPalette(color), [color]);
 
   return (
@@ -27,7 +27,10 @@ export const PaletteProvider = ({ children, color: defaultColor }: { children: J
         {
           color,
           palette,
-          setColor,
+          setColor: (val: string) => {
+            console.log('setting color', val);
+            setColor(val);
+          },
           classBuilder,
         }
       }

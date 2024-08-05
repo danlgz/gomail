@@ -20,6 +20,11 @@ export const classBuilder = cva(
         base: [`text-[var(--text)]`],
         foreground: [`text-[var(--foreground)]`],
         foreground2: [`text-[var(--foreground-2)]`],
+      },
+      border: {
+        base: [`border-[var(--base)]`],
+        foreground: [`border-[var(--foreground)]`],
+        foreground2: [`border-[var(--foreground-2)]`],
       }
     }
   }
@@ -33,14 +38,13 @@ type Palette = {
   highlight1: string; // background color based on the base color
   highlight2: string; // background color based on the base color
 }
-// type TailwindClassBuilder = (prefix: 'bg' | 'text', palleteOption: keyof Palette) => string;
 
 export type GenPaletteReturn = Palette & { palleteStyles: CSSProperties };
 
 export const genPalette = (base: string): GenPaletteReturn => {
   const color = chroma.valid(base) ? chroma(base) : chroma('#000');
   const luminance = color.luminance();
-  const text = luminance > 0.5 ? '#000' : '#fff';
+  const text = luminance > 0.5 ? '#000' : '#0c0a09';
   const foreground = luminance > 0.5 ? color.darken(2.5).hex() : color.brighten(3.5).hex();
   const foreground2 = luminance > 0.5 ? color.darken(3.5).hex() : color.brighten(4).hex();
   const highlight1 = luminance > 0.5 ? color.darken(0.3).hex() : color.brighten(0.5).hex();

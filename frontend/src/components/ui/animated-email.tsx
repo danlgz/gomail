@@ -43,7 +43,7 @@ export const AnimatedEmail = ({ open, color, className }: Props) => {
       )}
       autoPlay={false}
       loop={false}
-      initialSegment={[12, 12]}
+      initialSegment={open ? [middleFrame, middleFrame] : [12, 12]}
       style={color ? {
         // @ts-ignore
         '--custom-stroke': color

@@ -1,22 +1,45 @@
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useMatch, useNavigate, useParams } from "react-router-dom";
 import { cn } from "../../lib/utils";
 import { PaletteProvider, usePalette } from "../../providers/pallete";
 import Sidebar from "../layout/sidebar";
 import { ButtonBack, ButtonNext, Carousel, Slide, Slider, SliderBarLine } from "react-scroll-snap-anime-slider";
 import { workspaces as models } from "../../../wailsjs/go/models";
-import { useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
 import debounce from "debounce";
 
 type Props = {
-  color: string;
   workspaces: models.Workspace[];
+  children?: ReactNode;
 }
 
-const ScreenChild = ({ workspaces }: Props ) => {
-  const { classBuilder, setColor } = usePalette();
-  const [currentWorkspaceIndex, setCurrentWokspaceIndex] = useState(0)
+const Screen = ({ workspaces, children }: Props ) => {
+  const { id: workspaceId } = useParams()
+  const [hasAppliedFirstSlideMove, setHasAppliedFirstSlideMove] = useState(false)
+  const navigate = useNavigate()
+  const { classBuilder, setColor } = usePalette()
+  const sliderRef = useRef<Slider>(null);
+
+  const index = workspaces.findIndex(w => w.id === workspaceId)
   const widhtClass = "max-w-[300px]"
-  const sidebarClass = `${widhtClass} basis-full shrink-0`
+
+  useEffect(() => {
+    const workspace = workspaces[index]!
+    setColor(workspace.baseColor)
+  }, []);
+
+  useEffect(() => {
+    const slider = sliderRef.current!
+    slider.slideTo(index, hasAppliedFirstSlideMove)
+    setHasAppliedFirstSlideMove(true)
+  }, [workspaceId]);
+
+  const changeSlide = debounce((newIndex) => {
+    const workspace = workspaces[newIndex]
+    if (newIndex !== index) {
+      navigate(`/w/${workspace.id}`)
+      setColor(workspace.baseColor)
+    }
+  }, 50)
 
   return (
     <div
@@ -30,7 +53,7 @@ const ScreenChild = ({ workspaces }: Props ) => {
       <div
         className={
           cn(
-            "",
+            "flex-none",
             widhtClass,
           )
         }
@@ -39,23 +62,30 @@ const ScreenChild = ({ workspaces }: Props ) => {
           totalSlides={workspaces.length}
           visibleSlides={1}
           step={1}
-          currentSlide={currentWorkspaceIndex}
-          inertiaPower={10}
-          inertiaStopSpeed={30}
+          currentSlide={index}
           onSlide={
-            debounce(({ currentSlide }) => {
-              setCurrentWokspaceIndex(currentSlide)
-              setColor(workspaces[currentSlide].baseColor)
-            }, 0)
+            ({ currentSlide, scrollLeft, slideWidth, trayWidth }) => {
+              changeSlide(currentSlide)
+            }
           }
           className="flex flex-row overflow-y-hidden overflow-x-auto w-full flex-none h-full"
         >
-          <Slider>
+          <Slider
+            ref={sliderRef}
+          >
             {
               workspaces.map(
                 w => (
                   <Slide key={w.id}>
-                    <Sidebar className={sidebarClass} {...w} />
+                    <Sidebar
+                      className={
+                        cn(
+                          widhtClass,
+                          "basis-full shrink-0"
+                        )
+                      }
+                      {...w}
+                    />
                   </Slide>
                 )
               )
@@ -63,18 +93,8 @@ const ScreenChild = ({ workspaces }: Props ) => {
           </Slider>
         </Carousel>
       </div>
-      <div className="bg-white rounded-xl drop-shadow-md flex-1">
-
-      </div>
+      {children}
     </div>
-  )
-}
-
-const Screen = ({ color, workspaces }: Props) => {
-  return (
-    <PaletteProvider color={color}>
-      <ScreenChild color={color} workspaces={workspaces} />
-    </PaletteProvider>
   )
 }
 

@@ -5,14 +5,44 @@ import { cn } from "../../lib/utils";
 import { AccordionContent, AccordionItem, AccordionTrigger } from "./accordion";
 import AnimatedEmail from "./animated-email";
 import { usePalette } from "../../providers/pallete";
+import { Link, useLocation } from "react-router-dom";
 
 type Props = {
   email: string;
+  workspaceId: string;
   open?: boolean;
 }
 
-export const EmailCollapsible = ({ email, open }: Props) => {
+const routes = [
+  {
+    key: 'inbox',
+    name: 'Inbox',
+    path: 'inbox',
+    icon: <Inbox size={16} />,
+  },
+  {
+    key: 'sent',
+    name: 'Sent',
+    path: 'sent',
+    icon: <Send size={16} />,
+  },
+  {
+    key: 'draft',
+    name: 'Draft',
+    path: 'draft',
+    icon: <File size={16} />,
+  },
+  {
+    key: 'spam',
+    name: 'Spam',
+    path: 'spam',
+    icon: <OctagonAlert size={16} />,
+  }
+]
+
+export const EmailCollapsible = ({ email, open, workspaceId }: Props) => {
   const { classBuilder, palette: { foreground2 } } = usePalette();
+  const location = useLocation();
 
   return (
     <AccordionItem
@@ -68,45 +98,36 @@ export const EmailCollapsible = ({ email, open }: Props) => {
           )
         }
       >
-        <div
-          className={
-            "flex items-center justify-between py-2 px-3 rounded-lg hover:bg-black/5"
-          }
-        >
-          <div
-            className="flex gap-2 items-center"
-          >
-            <Inbox size={16} />
-            <span>Inbox</span>
-          </div>
-          <span className="text-xs">
-            3
-          </span>
-        </div>
-
-        <div className="flex items-center justify-between bg-white/40 py-2 px-3 rounded-lg text-black font-semibold">
-          <div className="flex gap-2 items-center">
-            <Send size={16} />
-            <span>Sent</span>
-          </div>
-          <span className="text-xs">3</span>
-        </div>
-
-        <div className="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-black/5">
-          <div className="flex gap-2 items-center">
-            <File size={16} />
-            <span>Draft</span>
-          </div>
-          <span className="text-xs">3</span>
-        </div>
-
-        <div className="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-black/5">
-          <div className="flex gap-2 items-center">
-            <OctagonAlert size={16} />
-            <span>Spam</span>
-          </div>
-          <span className="text-xs">3</span>
-        </div>
+        {
+          routes.map(
+            ({ name, path, key, icon }) => {
+              const currentPath = location.pathname.includes(`${email}/${path}`);
+              return (
+                <Link
+                  to={`/w/${workspaceId}/e/${email}/${path}`}
+                  key={key}
+                  className={
+                    cn(
+                      "flex items-center justify-between py-2 px-3 rounded-lg transition-all",
+                      !currentPath && classBuilder({ hover: 'highlight1' }),
+                      currentPath && classBuilder({ bg: 'highlight2' })
+                    )
+                  }
+                >
+                  <div
+                    className="flex gap-2 items-center"
+                  >
+                    {icon}
+                    <span>{name}</span>
+                  </div>
+                  <span className="text-xs">
+                    3
+                  </span>
+                </Link>
+              )
+            }
+          )
+        }
       </AccordionContent>
     </AccordionItem>
   )
