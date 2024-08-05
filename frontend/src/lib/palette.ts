@@ -10,6 +10,7 @@ export const classBuilder = cva(
         base: [`bg-[var(--base)]`],
         highlight1: [`bg-[var(--highlight-1)]`],
         highlight2: [`bg-[var(--highlight-2)]`],
+        foreground: [`bg-[var(--foreground)]`],
       },
       hover: {
         base: [`hover:bg-[var(--base)]`],

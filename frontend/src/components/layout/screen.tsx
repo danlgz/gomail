@@ -6,6 +6,7 @@ import { ButtonBack, ButtonNext, Carousel, Slide, Slider, SliderBarLine } from "
 import { workspaces as models } from "../../../wailsjs/go/models";
 import { ReactNode, useEffect, useRef, useState } from "react";
 import debounce from "debounce";
+import { Dot } from "lucide-react";
 
 type Props = {
   workspaces: models.Workspace[];
@@ -72,6 +73,7 @@ const Screen = ({ workspaces, children }: Props ) => {
         >
           <Slider
             ref={sliderRef}
+            className="relative"
           >
             {
               workspaces.map(
@@ -90,6 +92,33 @@ const Screen = ({ workspaces, children }: Props ) => {
                 )
               )
             }
+            <div
+              className={
+                cn(
+                  "absolute z-10 bottom-0 left-[50%] translate-x-[-50%] flex gap-2",
+                  classBuilder({ text: 'foreground' })
+                )
+              }
+            >
+              {
+                workspaces.map(
+                  ({ id }, i) => (
+                    <div
+                      className={
+                        cn(
+                          "w-2 h-2 rounded-full mb-4 border box-border cursor-pointer",
+                          classBuilder({ border: 'foreground' }),
+                          i === index && classBuilder({ bg: 'foreground' })
+                        )
+                      }
+                      onClick={() => {
+                        changeSlide(i)
+                      }}
+                    />
+                  )
+                )
+              }
+            </div>
           </Slider>
         </Carousel>
       </div>

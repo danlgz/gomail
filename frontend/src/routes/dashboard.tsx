@@ -26,9 +26,9 @@ const Dashboard = () => {
               // setColor(workspace.baseColor)
 
               const { selectedEmail, selectedView } = workspace
-              if (!hasPageSelected && selectedEmail && selectedView) {
-                return <Navigate to={`e/${selectedEmail}/${selectedView}`} />
-              }
+              // if (!hasPageSelected && selectedEmail && selectedView) {
+              //   return <Navigate to={`e/${selectedEmail}/${selectedView}`} />
+              // }
 
               return (
                 <Screen workspaces={workspaces}>
