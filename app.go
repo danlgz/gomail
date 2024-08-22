@@ -4,7 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	database "gomail/db"
+	"gomail/database"
 	"gomail/internal/workspaces"
 	"log"
 )

@@ -19,12 +19,7 @@ func RunMigrations() (*sql.DB, error) {
 	// goose migrations
 	goose.SetDialect("sqlite3")
 
-	// var migrationsPath string
-	// if migrationsPath, err = filepath.Abs("./migrations"); err != nil {
-	// 	return nil, err
-	// }
-
-	if err = goose.Up(db, "./db/migrations"); err != nil {
+	if err = goose.Up(db, "./database/migrations"); err != nil {
 		return nil, err
 	}
 
